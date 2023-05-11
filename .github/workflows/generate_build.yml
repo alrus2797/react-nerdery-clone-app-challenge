@@ -3,7 +3,7 @@ name: Generate a build and push to build branch
 on:
   push:
     branches:
-      - master # Remove this line if your primary branch is "main"
+      - staging
 
 jobs:
   build:
