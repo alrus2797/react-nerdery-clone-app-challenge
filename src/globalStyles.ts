@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: 0;
     color: white;
-    font-family: 'Gotham', sans-serif;
+    font-family: 'Circular Std', sans-serif;
     min-height: 600px;
     min-width: 600px;
     width: 100%;
