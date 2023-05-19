@@ -1,4 +1,3 @@
-import { ElementType } from 'react';
 import { NavLinkContainer } from './styles';
 import { NavLinkProps } from '../../shared/types/nav-link';
 
