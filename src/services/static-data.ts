@@ -6,6 +6,7 @@ import {
   SearchActiveIcon,
   SearchIcon,
 } from '../assets/icons';
+import { HOME_ROUTE, SEARCH_ROUTE } from '../shared/constants/router';
 import { NavLinkProps } from '../shared/types/nav-link';
 
 export function getLegalLinks() {
@@ -39,12 +40,12 @@ export function getNavLinks() {
       icon: HomeIcon,
       activeIcon: HomeActiveIcon,
       name: 'Inicio',
-      to: '/',
+      to: HOME_ROUTE,
     },
     {
       icon: SearchIcon,
       activeIcon: SearchActiveIcon,
-      to: '/search',
+      to: SEARCH_ROUTE,
       name: 'Buscar',
     },
     {

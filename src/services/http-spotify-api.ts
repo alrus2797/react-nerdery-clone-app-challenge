@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '../shared/constants';
+import { API_BASE_URL } from '../shared/constants/api';
 import { Genre } from '../shared/types/genre';
 import { Section } from '../shared/types/section';
 import axios from 'axios';
