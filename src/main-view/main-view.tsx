@@ -1,6 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeView } from './home-view';
+import { SearchView } from './search-view/search-view';
+import { Header } from '../header';
+import { useState } from 'react';
+import { SEARCH_ROUTE } from '../shared/constants/router';
 
 const MainDiv = styled.div`
   grid-area: main-view;
@@ -13,15 +17,22 @@ const MainDiv = styled.div`
 `;
 
 function MainView() {
+  const [searched, setSearched] = useState('');
   return (
-    <MainDiv>
-      <div className="header-spacer" />
-      <Routes>
-        <Route index element={<HomeView />} />
-        <Route path="search" element={<div>Search</div>} />
-        <Route path="login" element={<div>Login</div>} />
-      </Routes>
-    </MainDiv>
+    <>
+      <Header setSearched={setSearched} />
+      <MainDiv>
+        <div className="header-spacer" />
+        <Routes>
+          <Route index element={<HomeView />} />
+          <Route
+            path={SEARCH_ROUTE}
+            element={<SearchView searchedText={searched} />}
+          />
+          <Route path="login" element={<div>Login</div>} />
+        </Routes>
+      </MainDiv>
+    </>
   );
 }
 

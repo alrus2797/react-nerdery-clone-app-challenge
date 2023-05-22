@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router';
 import { LeftArrowIcon, RightArrowIcon } from '../assets/icons';
 import { Flex } from '../shared/ui/flex';
 
@@ -8,8 +9,19 @@ import {
   RegisterButton,
   StyledHeader,
 } from './styles';
+import { SearchInput } from './search-input';
+import { setState } from '../shared/types/setState';
+import { SEARCH_ROUTE } from '../shared/constants/router';
 
-export const Header = () => {
+interface HeaderProps {
+  setSearched: setState<string>;
+}
+
+const isInSearchView = (pathname: string) => pathname === SEARCH_ROUTE;
+
+export const Header = ({ setSearched }: HeaderProps) => {
+  const { pathname } = useLocation();
+
   return (
     <HeaderWrapper>
       <StyledHeader>
@@ -22,6 +34,10 @@ export const Header = () => {
             <RightArrowIcon />
           </HistoryButtonContainer>
         </Flex>
+        {isInSearchView(pathname) ? (
+          <SearchInput setSearched={setSearched} />
+        ) : null}
+
         <div>
           <RegisterButton>Registrarse</RegisterButton>
           <LoginButton>
