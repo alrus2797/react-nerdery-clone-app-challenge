@@ -6,7 +6,6 @@ on:
       - staging
 env:
   VITE_APIBASE_URL: ${{vars.VITE_APIBASE_URL}}
-
 jobs:
   build:
     runs-on: ubuntu-latest
