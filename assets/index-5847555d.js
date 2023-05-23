@@ -317,9 +317,9 @@ Error generating stack: `+o.message+`
     max-height: 4.5rem;
 
     a {
+      text-decoration: none;
       div {
         color: var(--base);
-        text-decoration: none;
         display: block;
         width: calc(100%);
         white-space: nowrap;
