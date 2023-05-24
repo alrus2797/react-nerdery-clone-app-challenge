@@ -7,6 +7,7 @@ import {
   ShelfLinkContainer,
 } from './styles';
 import { ShelfCard, ShelfCardsContainer } from './shelf-card';
+import { Heading2 } from '../../../shared/ui/heading2';
 
 interface ShelfProps {
   title: string;
@@ -20,9 +21,9 @@ const Shelf = ({ title, shelfLink, items, className, uri }: ShelfProps) => (
   <ShelfSection className={className}>
     <Flex margin="0 0 16px">
       <ShelfTitleContainer>
-        <h2>
+        <Heading2>
           <a href={shelfLink}>{title}</a>
-        </h2>
+        </Heading2>
       </ShelfTitleContainer>
       <ShelfLinkContainer>
         <a href={uri}>Mostrar todos</a>
