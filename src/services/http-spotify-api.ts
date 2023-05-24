@@ -1,5 +1,5 @@
 import { API_BASE_URL } from '../shared/constants/api';
-import { Genre } from '../shared/types/genre';
+import { Categorie } from '../shared/types/categorie';
 import { Section } from '../shared/types/section';
 import axios from 'axios';
 
@@ -9,6 +9,6 @@ export async function getSections() {
 }
 
 export async function getCategories() {
-  const { data } = await axios.get<Genre[]>(`${API_BASE_URL}/categories`);
+  const { data } = await axios.get<Categorie[]>(`${API_BASE_URL}/categories`);
   return data;
 }
