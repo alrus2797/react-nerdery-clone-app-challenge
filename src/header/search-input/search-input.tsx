@@ -29,14 +29,13 @@ const IconSpan = styled.span`
 `;
 
 export function SearchInput() {
-  const [search, setSearched] = useState('');
+  const [searched, setSearched] = useState('');
   const navigate = useNavigate();
 
   const { pathname } = useLocation();
 
   const textHandler = (e: FormEvent<HTMLInputElement>) => {
-    // setSearched(e.currentTarget.value);
-    setSearched(e.currentTarget.value);
+    setSearched(encodeURIComponent(e.currentTarget.value));
   };
 
   useEffect(() => {
@@ -46,9 +45,9 @@ export function SearchInput() {
   }, [pathname]);
 
   useEffect(() => {
-    const redirectString = `${SEARCH_ROUTE}/${search}`;
+    const redirectString = `${SEARCH_ROUTE}/${encodeURIComponent(searched)}`;
     navigate(redirectString);
-  }, [search, pathname, navigate]);
+  }, [searched, pathname, navigate]);
 
   return (
     <Flex
@@ -65,7 +64,7 @@ export function SearchInput() {
             autoCapitalize="off"
             spellCheck="false"
             placeholder="¿Qué te apetece escuchar?"
-            value={search}
+            value={decodeURIComponent(searched)}
             onChange={textHandler}
             style={{ color: 'rgb(0, 0, 0)' }}
           />
