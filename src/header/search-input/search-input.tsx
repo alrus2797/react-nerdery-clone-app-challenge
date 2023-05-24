@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import { SearchIcon } from '../../assets/icons';
 import { Flex } from '../../shared/ui/flex';
-import { FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { matchPath, useLocation, useNavigate } from 'react-router';
+
 import {
   SEARCH_RESULT_ROUTE,
   SEARCH_ROUTE,
 } from '../../shared/constants/router';
+import { debounce } from 'lodash';
 
 const SearchContainer = styled.div`
   flex: 0 1 364px;
@@ -34,9 +36,12 @@ export function SearchInput() {
 
   const { pathname } = useLocation();
 
-  const textHandler = (e: FormEvent<HTMLInputElement>) => {
-    setSearched(encodeURIComponent(e.currentTarget.value));
+  const textHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const text = e.target.value;
+    setSearched(text);
   };
+
+  const debouncedHandler = debounce(textHandler, 300);
 
   useEffect(() => {
     const match = matchPath(SEARCH_RESULT_ROUTE, pathname);
@@ -46,8 +51,10 @@ export function SearchInput() {
 
   useEffect(() => {
     const redirectString = `${SEARCH_ROUTE}/${encodeURIComponent(searched)}`;
-    navigate(redirectString);
-  }, [searched, pathname, navigate]);
+    navigate(redirectString, {
+      replace: true,
+    });
+  }, [searched, navigate]);
 
   return (
     <Flex
@@ -64,8 +71,7 @@ export function SearchInput() {
             autoCapitalize="off"
             spellCheck="false"
             placeholder="¿Qué te apetece escuchar?"
-            value={decodeURIComponent(searched)}
-            onChange={textHandler}
+            onChange={debouncedHandler}
             style={{ color: 'rgb(0, 0, 0)' }}
           />
         </form>

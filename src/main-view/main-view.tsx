@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeView } from './home-view';
-import { SearchCategorieView } from './search-cateforie-view/search-view';
+import { SearchCategorieView } from './search-categorie-view/search-view';
 import { Header } from '../header';
 import { SEARCH_ROUTE } from '../shared/constants/router';
-import { SearchResultsView } from './search-cateforie-view/search-results-view';
+import { SearchResultsView } from './search-categorie-view/search-results-view';
 
 const MainDiv = styled.div`
   grid-area: main-view;
