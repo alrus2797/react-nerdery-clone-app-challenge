@@ -1,8 +1,12 @@
 import styled from 'styled-components';
 import { SearchIcon } from '../../assets/icons';
 import { Flex } from '../../shared/ui/flex';
-import { FormEvent, useState } from 'react';
-import { setState } from '../../shared/types/setState';
+import { FormEvent, useEffect, useState } from 'react';
+import { matchPath, useLocation, useNavigate } from 'react-router';
+import {
+  SEARCH_RESULT_ROUTE,
+  SEARCH_ROUTE,
+} from '../../shared/constants/router';
 
 const SearchContainer = styled.div`
   flex: 0 1 364px;
@@ -24,17 +28,27 @@ const IconSpan = styled.span`
   color: var(--base);
 `;
 
-interface setSearched {
-  setSearched: setState<string>;
-}
+export function SearchInput() {
+  const [search, setSearched] = useState('');
+  const navigate = useNavigate();
 
-export function SearchInput({ setSearched }: setSearched) {
-  const [text, setText] = useState('');
+  const { pathname } = useLocation();
 
   const textHandler = (e: FormEvent<HTMLInputElement>) => {
+    // setSearched(e.currentTarget.value);
     setSearched(e.currentTarget.value);
-    setText(e.currentTarget.value);
   };
+
+  useEffect(() => {
+    const match = matchPath(SEARCH_RESULT_ROUTE, pathname);
+
+    if (match?.params.text) setSearched(match.params.text);
+  }, [pathname]);
+
+  useEffect(() => {
+    const redirectString = `${SEARCH_ROUTE}/${search}`;
+    navigate(redirectString);
+  }, [search, pathname, navigate]);
 
   return (
     <Flex
@@ -51,7 +65,7 @@ export function SearchInput({ setSearched }: setSearched) {
             autoCapitalize="off"
             spellCheck="false"
             placeholder="¿Qué te apetece escuchar?"
-            value={text}
+            value={search}
             onChange={textHandler}
             style={{ color: 'rgb(0, 0, 0)' }}
           />
