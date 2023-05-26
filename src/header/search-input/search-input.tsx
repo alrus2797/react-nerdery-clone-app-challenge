@@ -34,12 +34,13 @@ const IconSpan = styled.span`
 const HANDLER_MS_WAIT = 300;
 
 export function SearchInput() {
-  const [searched, setSearched] = useState('');
   const navigate = useNavigate();
 
   const inputRef = useRef() as RefObject<HTMLInputElement>;
 
   const { pathname } = useLocation();
+  const initialMatch = matchPath(SEARCH_RESULT_ROUTE, pathname);
+  const [searched, setSearched] = useState(initialMatch?.params.text || '');
 
   const textHandler = (e: InputChangeEvent) => {
     const text = e.target.value;
