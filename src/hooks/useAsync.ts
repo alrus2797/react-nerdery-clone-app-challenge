@@ -7,7 +7,10 @@ function instantiateError(error: unknown) {
   return thisWillBeAnError;
 }
 
-export const useAsync = <T>(asyncFunction: () => Promise<T>) => {
+export const useAsync = <T, A>(
+  asyncFunction: (args?: A) => Promise<T>,
+  args?: A,
+) => {
   const [value, setValue] = useState<T | null>(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -15,15 +18,17 @@ export const useAsync = <T>(asyncFunction: () => Promise<T>) => {
   const reSync = useCallback(() => {
     setPending(true);
     setError(null);
-    return asyncFunction()
-      .then(response => setValue(response))
+    return asyncFunction(args)
+      .then(response => {
+        setValue(response);
+      })
       .catch(promiseError => {
         setError(instantiateError(promiseError));
       })
       .finally(() => {
         setPending(false);
       });
-  }, [asyncFunction]);
+  }, [asyncFunction, args]);
 
   useEffect(() => {
     reSync();

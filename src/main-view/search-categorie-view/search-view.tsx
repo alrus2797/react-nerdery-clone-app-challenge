@@ -4,6 +4,7 @@ import { Flex } from '../../shared/ui/flex';
 import { useAsync } from '../../hooks/useAsync';
 import { getCategories } from '../../services/http-spotify-api';
 import { useGenerateRandomColor } from '../../hooks/useRandomColor';
+import { SPOTIFY_GENRE_URL } from '../../shared/constants/app';
 
 export const SearchTitleContainer = styled.div`
   flex-grow: 1;
@@ -22,7 +23,7 @@ export const GenresContainer = styled.div`
   /* grid-template-rows: 1fr; */
 `;
 
-export const CategorieCard = styled.div`
+export const CategorieCard = styled.a`
   background-color: gray;
   border: none;
   border-radius: 8px;
@@ -79,6 +80,7 @@ function SearchCategorieView() {
       <GenresContainer>
         {categories?.map(categorie => (
           <CategorieCard
+            href={`${SPOTIFY_GENRE_URL}/${categorie.id}`}
             style={{ backgroundColor: getRandomColor() }}
             key={categorie.id}
           >
