@@ -33,9 +33,9 @@ export const Header = () => {
         {isInSearchView(pathname) ? <SearchInput /> : null}
 
         <div>
-          <RegisterButton>Registrarse</RegisterButton>
+          <RegisterButton>Sign up</RegisterButton>
           <LoginButton>
-            <span>Iniciar Sesión</span>
+            <span>Log in</span>
           </LoginButton>
         </div>
       </StyledHeader>

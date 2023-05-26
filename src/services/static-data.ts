@@ -16,11 +16,11 @@ export function getLegalLinks() {
       url: '/legal',
     },
     {
-      title: 'Centro de privacidad',
+      title: 'Privacy Center',
       url: '/privacy-center',
     },
     {
-      title: 'Política de privacidad',
+      title: 'Privacy Policy',
       url: '/privacy-policy',
     },
     {
@@ -28,7 +28,7 @@ export function getLegalLinks() {
       url: '/cookies',
     },
     {
-      title: 'Información sobre anuncios',
+      title: 'About Ads',
       url: '/ad-info',
     },
   ];
@@ -39,20 +39,20 @@ export function getNavLinks() {
     {
       icon: HomeIcon,
       activeIcon: HomeActiveIcon,
-      name: 'Inicio',
+      name: 'Home',
       to: HOME_ROUTE,
     },
     {
       icon: SearchIcon,
       activeIcon: SearchActiveIcon,
       to: SEARCH_ROUTE,
-      name: 'Buscar',
+      name: 'Search',
     },
     {
       icon: CollectionIcon,
       activeIcon: CollectionActiveIcon,
       to: '/library',
-      name: 'Tu biblioteca',
+      name: 'Your library',
     },
   ];
   return links;

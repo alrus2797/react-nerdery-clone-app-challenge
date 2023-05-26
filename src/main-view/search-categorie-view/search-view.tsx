@@ -73,7 +73,7 @@ function SearchCategorieView() {
   return (
     <Flex direction="column" padding="15px 32px">
       <SearchTitleContainer>
-        <Heading2>Explorar Todo</Heading2>
+        <Heading2>Browse all</Heading2>
       </SearchTitleContainer>
 
       <GenresContainer>

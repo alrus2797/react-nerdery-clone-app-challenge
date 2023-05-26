@@ -13,13 +13,13 @@ export const CollectionList = () => (
         <PlaylistIcon>
           <PlusIcon />
         </PlaylistIcon>
-        <span> Crear Lista</span>
+        <span> Create Playlist</span>
       </CollectionItem>
       <CollectionItem>
         <PlaylistIcon>
           <PlusIcon />
         </PlaylistIcon>
-        <span> Canciones que te gustan</span>
+        <span> Liked Songs</span>
       </CollectionItem>
     </CollectionContainer>
   </CollectionListContainer>

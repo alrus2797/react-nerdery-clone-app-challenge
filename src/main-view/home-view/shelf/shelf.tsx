@@ -25,9 +25,9 @@ const Shelf = ({ title, shelfLink, items, className, uri }: ShelfProps) => (
           <a href={shelfLink}>{title}</a>
         </Heading2>
       </ShelfTitleContainer>
-      <ShelfLinkContainer>
-        <a href={uri}>Mostrar todos</a>
-      </ShelfLinkContainer>
+        <ShelfLinkContainer>
+          <a href={shelfLink}>Show all</a>
+        </ShelfLinkContainer>
     </Flex>
     <ShelfCardsContainer
       gridGap={24}
