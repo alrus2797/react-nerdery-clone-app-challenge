@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { SearchIcon } from '../../assets/icons';
 import { Flex } from '../../shared/ui/flex';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { matchPath, useLocation, useNavigate } from 'react-router';
 
 import {
@@ -9,6 +9,7 @@ import {
   SEARCH_ROUTE,
 } from '../../shared/constants/router';
 import { debounce } from 'lodash';
+import { InputChangeEvent } from '../../shared/types/input-change-event';
 
 const SearchContainer = styled.div`
   flex: 0 1 364px;
@@ -30,23 +31,32 @@ const IconSpan = styled.span`
   color: var(--base);
 `;
 
+const HANDLER_MS_WAIT = 300;
+
 export function SearchInput() {
   const [searched, setSearched] = useState('');
   const navigate = useNavigate();
 
+  const inputRef = useRef() as RefObject<HTMLInputElement>;
+
   const { pathname } = useLocation();
 
-  const textHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const textHandler = (e: InputChangeEvent) => {
     const text = e.target.value;
     setSearched(text);
   };
 
-  const debouncedHandler = debounce(textHandler, 300);
+  const debouncedHandler = debounce(textHandler, HANDLER_MS_WAIT);
 
   useEffect(() => {
     const match = matchPath(SEARCH_RESULT_ROUTE, pathname);
 
-    if (match?.params.text) setSearched(match.params.text);
+    if (match?.params.text) {
+      if (inputRef && inputRef.current) {
+        inputRef.current.value = match.params.text;
+      }
+      setSearched(match.params.text);
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -66,11 +76,12 @@ export function SearchInput() {
       <SearchContainer>
         <form role="search">
           <TextField
+            ref={inputRef}
             maxLength={800}
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck="false"
-            placeholder="¿Qué te apetece escuchar?"
+            placeholder="What do you listen to?"
             onChange={debouncedHandler}
             style={{ color: 'rgb(0, 0, 0)' }}
           />
