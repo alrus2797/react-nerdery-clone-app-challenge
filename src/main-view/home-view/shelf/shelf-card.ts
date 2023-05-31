@@ -44,6 +44,7 @@ export const ShelfCard = styled.div`
   padding: 16px;
   position: relative;
   transition: background-color 0.3s ease;
+  min-width: 180px;
   width: 100%;
 
   &:hover {
@@ -81,6 +82,8 @@ export const ShelfCard = styled.div`
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+
+      word-wrap: break-word;
 
       text-overflow: ellipsis;
     }

@@ -7,26 +7,30 @@ import {
   ShelfLinkContainer,
 } from './styles';
 import { ShelfCard, ShelfCardsContainer } from './shelf-card';
+import { Heading2 } from '../../../shared/ui/heading2';
+import { SPOTIFY_APP_URL } from '../../../shared/constants/app';
 
 interface ShelfProps {
   title: string;
-  shelfLink: string;
+  shelfLink?: string;
   items: SectionItem[];
   className?: string;
-  uri: string;
+  uri?: string;
 }
 
-const Shelf = ({ title, shelfLink, items, className, uri }: ShelfProps) => (
+const Shelf = ({ title, shelfLink, items, className }: ShelfProps) => (
   <ShelfSection className={className}>
     <Flex margin="0 0 16px">
       <ShelfTitleContainer>
-        <h2>
+        <Heading2>
           <a href={shelfLink}>{title}</a>
-        </h2>
+        </Heading2>
       </ShelfTitleContainer>
-      <ShelfLinkContainer>
-        <a href={uri}>Mostrar todos</a>
-      </ShelfLinkContainer>
+      {shelfLink && (
+        <ShelfLinkContainer>
+          <a href={shelfLink}>Show all</a>
+        </ShelfLinkContainer>
+      )}
     </Flex>
     <ShelfCardsContainer
       gridGap={24}
@@ -35,12 +39,12 @@ const Shelf = ({ title, shelfLink, items, className, uri }: ShelfProps) => (
       columnWidth={174}
     >
       {items.map(item => (
-        <ShelfCard key={item.uri}>
+        <ShelfCard key={item.id}>
           <div className="portrait">
             <img src={item.image.url} alt={item.name} />
           </div>
           <div className="card-text">
-            <a href={`/song/${item.uri}`}>
+            <a href={`${SPOTIFY_APP_URL}/${item.type}/${item.id}`}>
               <div>{item.name}</div>
             </a>
             <div>{item.description}</div>
@@ -50,7 +54,6 @@ const Shelf = ({ title, shelfLink, items, className, uri }: ShelfProps) => (
     </ShelfCardsContainer>
   </ShelfSection>
 );
-
 export const StyledShelf = styled(Shelf)`
   flex: 1 1 auto;
   flex-basis: 100%;

@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { DesktopLayout } from './desktop-layout';
 import GlobalStyle from './globalStyles';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import { AuthProvider } from './providers/auth-provider';
+import { LoginView, SignupView } from './main-view/auth/';
+import { setupInterceptors } from './interceptors';
 
 const MainDiv = styled.div`
   position: relative;
@@ -14,14 +18,26 @@ const MainDiv = styled.div`
   padding: 0;
 `;
 
+const RootLayout = (
+  <MainDiv>
+    <DesktopLayout />
+  </MainDiv>
+);
+
+setupInterceptors();
+
 function App() {
   return (
-    <BrowserRouter>
-      <MainDiv>
+    <AuthProvider>
+      <BrowserRouter>
         <GlobalStyle />
-        <DesktopLayout />
-      </MainDiv>
-    </BrowserRouter>
+        <Routes>
+          <Route path="login" element={<LoginView />} />
+          <Route path="signup" element={<SignupView />} />
+          <Route path="/*" element={RootLayout} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

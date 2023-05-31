@@ -11,12 +11,18 @@ export const CollectionListContainer = styled.div`
   position: relative;
 `;
 
+export const AuthCollectionListContainer = styled(CollectionListContainer)`
+  margin-top: 0px;
+  color: white;
+`;
+
 export const CollectionContainer = styled(CollectionListContainer)`
   flex: 1;
   height: 100%;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  margin-top: 0;
 `;
 
 export const CollectionItem = styled.div`
@@ -42,12 +48,31 @@ export const CollectionItem = styled.div`
   }
 `;
 
-export const PlaylistIcon = styled.div`
+export const AuthCollectionItem = styled(CollectionItem)`
+  opacity: 1;
+`;
+
+export const PlaylistIcon = styled.div<{
+  size?: number;
+  borderRadius?: number;
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
+  width: ${props => props.size ?? 24}px;
+  height: ${props => props.size ?? 24}px;
   background-color: white;
-  border-radius: 2px;
+  border-radius: ${props => props.borderRadius ?? 2}px;
+`;
+
+export const LikedIconContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #450af5, #c4efd9);
+  color: white;
+  fill: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
 `;

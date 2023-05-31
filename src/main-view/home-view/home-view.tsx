@@ -3,9 +3,13 @@ import { useAsync } from '../../hooks/useAsync';
 import { getSections } from '../../services/http-spotify-api';
 import { StyledShelf } from './shelf';
 import { HomeDiv, LightDiv, StyledMain } from './styles';
+import { useAuth } from '../../hooks/useAuth';
+import { useMemo } from 'react';
 
 function HomeView() {
-  const { value: sections } = useAsync(getSections);
+  const { auth, isLogged } = useAuth();
+  const { value: sections } = useAsync(useMemo(() => getSections, []));
+
   return (
     <HomeDiv>
       <StyledMain>
@@ -16,9 +20,14 @@ function HomeView() {
           wrap="wrap"
           gap="24px"
         >
+          {isLogged ? (
+            <code style={{ color: 'white', zIndex: 1 }}>
+              {JSON.stringify(auth?.user)}
+            </code>
+          ) : null}
           {sections?.map(section => (
             <StyledShelf
-              key={section.uri}
+              key={section.id}
               uri={section.uri}
               title={section.title}
               shelfLink={section.uri}
