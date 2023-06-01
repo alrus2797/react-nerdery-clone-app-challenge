@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './providers/auth-provider';
 import { LoginView, SignupView } from './main-view/auth/';
 import { setupInterceptors } from './interceptors';
+import { LibraryProvider } from './providers/library-provider';
 
 const MainDiv = styled.div`
   position: relative;
@@ -20,7 +21,9 @@ const MainDiv = styled.div`
 
 const RootLayout = (
   <MainDiv>
-    <DesktopLayout />
+    <LibraryProvider>
+      <DesktopLayout />
+    </LibraryProvider>
   </MainDiv>
 );
 
