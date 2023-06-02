@@ -8,13 +8,14 @@ interface ShelfCardContainerProps {
 }
 export const ShelfCardsContainer = styled.div<ShelfCardContainerProps>`
   grid-column-gap: ${props => props.gridGap}px;
+  grid-row-gap: var(--row-gap, 0);
   display: grid;
   grid-template-columns: repeat(${props => props.columnCount}, minmax(0, 1fr));
   min-width: ${props => props.minContainerWidth}px;
   --column-width: ${props => props.columnWidth}px;
 
   grid-auto-flow: row;
-  grid-auto-rows: 0px;
+  grid-auto-rows: var(--auto-rows, 0px);
   grid-template-rows: 1fr;
 
   @media (min-width: 1130px) and (max-width: 1300px) {
