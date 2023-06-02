@@ -1,17 +1,7 @@
 import { PropsWithChildren, createContext, useState } from 'react';
-interface Playlist {
-  id: string;
-  name: string;
-  items: SpotifyApi.TrackObjectSimplified;
-}
+import { LibraryItem } from '../shared/types/library-item';
 
-type AllSpotifyObjects =
-  | SpotifyApi.AlbumObjectSimplified
-  | SpotifyApi.PlaylistObjectSimplified
-  | SpotifyApi.ShowObjectSimplified
-  | Playlist;
-
-type Library = AllSpotifyObjects[];
+type Library = LibraryItem[];
 
 type LibraryDispatch = (arg: Library) => void;
 
@@ -22,16 +12,20 @@ const defaultLibrary = [] as Library;
 const defaultLibraryContext: LibraryValueDispatch = [
   defaultLibrary,
   (_: Library) => {
-    _.at(1);
+    _.at(0);
   },
 ];
 
-const LibraryContext = createContext<LibraryValueDispatch>(
+export const LibraryContext = createContext<LibraryValueDispatch>(
   defaultLibraryContext,
 );
 
 export const LibraryProvider = (props: PropsWithChildren) => {
   const [library, setLibrary] = useState<Library>([]);
+
+  const addToLibrary = (item: LibraryItem) => {
+    setLibrary([...library, item]);
+  };
 
   return <LibraryContext.Provider {...props} value={[library, setLibrary]} />;
 };

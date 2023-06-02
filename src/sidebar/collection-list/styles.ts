@@ -48,10 +48,6 @@ export const CollectionItem = styled.div`
   }
 `;
 
-export const AuthCollectionItem = styled(CollectionItem)`
-  opacity: 1;
-`;
-
 export const PlaylistIcon = styled.div<{
   size?: number;
   borderRadius?: number;

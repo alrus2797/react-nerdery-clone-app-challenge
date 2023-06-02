@@ -47,8 +47,8 @@ export const Header = () => {
             </LoginButton>
           </div>
         ) : (
-          <Flex align="center">
-            <h4>Name: {auth?.user.username}</h4>
+          <Flex align="center" gap="30px">
+            <h4>{auth?.user.username}</h4>
             <Box margin="0px 0px 0px 10px">
               <ThemeButton onClick={logout}>Logout</ThemeButton>
             </Box>

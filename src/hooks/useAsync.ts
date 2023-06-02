@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 function instantiateError(error: unknown) {
   let thisWillBeAnError;
@@ -16,6 +16,8 @@ export const useAsync = <T, A extends unknown[]>(
   const [value, setValue] = useState<T | null>(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+
+  const { current: memoizedArgs } = useRef(args);
 
   const reSync = useCallback(
     (...reSyncArg: A) => {
@@ -36,8 +38,8 @@ export const useAsync = <T, A extends unknown[]>(
   );
 
   useEffect(() => {
-    reSync(...args);
-  }, [reSync]);
+    reSync(...memoizedArgs);
+  }, [reSync, memoizedArgs]);
 
   return { value, pending, error, setValue, reSync };
 };
