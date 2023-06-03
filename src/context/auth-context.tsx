@@ -9,6 +9,7 @@ type AuthValueDispatch = [NullableUserWithToken, AuthDispatch];
 export const AuthContext = createContext<AuthValueDispatch | null>(null);
 
 const configInterceptors = (auth: NullableUserWithToken) => {
+  axios.interceptors.response.clear();
   if (auth) {
     axios.interceptors.request.use(request => {
       request.headers.Authorization = `Bearer ${auth.accessToken}`;
