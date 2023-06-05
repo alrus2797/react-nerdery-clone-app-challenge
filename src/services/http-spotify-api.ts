@@ -2,7 +2,7 @@ import { Section } from '../shared/types/section';
 import axios from 'axios';
 import { searchMapper } from './data-mappers/search-mapper';
 import { categoriesMapper } from './data-mappers/categories-mapper';
-import { LibraryItem } from '../shared/types/library-item';
+import { LibraryItem, LibraryItemPayload } from '../shared/types/library-item';
 import { LoginInputs } from '../shared/types/auth-inputs';
 import { UserWithToken } from '../shared/types/user';
 import { SignupInputs } from '../shared/types/signup-inputs';
@@ -31,7 +31,7 @@ export async function searchAll(searchText: string) {
   return searchMapper(data);
 }
 
-export async function addToLibrary(object: LibraryItem) {
+export async function addToLibrary(object: LibraryItemPayload) {
   const { data } = await axios.post<LibraryItem>(
     `${API_BASE_URL}/library-items`,
     object,
@@ -51,6 +51,15 @@ export async function getLibraryItems(userId: number) {
     `${API_BASE_URL}/users/${userId}/library-items`,
   );
   return data.reverse();
+}
+
+export async function editLibraryItem(libraryItem: LibraryItem) {
+  const { id, ...payload } = libraryItem;
+  const { data } = await axios.patch<LibraryItem>(
+    `${API_BASE_URL}/library-items/${id}`,
+    payload,
+  );
+  return data;
 }
 
 export async function removeFromLibrary(libraryItemId: number) {

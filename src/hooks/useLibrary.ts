@@ -3,11 +3,13 @@ import { LibraryContext } from '../context/library-context';
 import {
   addToLibrary,
   createPlaylist,
+  editLibraryItem,
   getLibraryItems,
   removeFromLibrary,
 } from '../services/http-spotify-api';
 import { useAuth } from './useAuth';
 import { AllSpotifyObjects } from '../shared/types/spotify-objects';
+import { LibraryItem } from '../shared/types/library-item';
 
 export const useLibrary = () => {
   const [library, setLibrary] = useContext(LibraryContext);
@@ -50,6 +52,19 @@ export const useLibrary = () => {
       });
   };
 
+  const edit = (payload: LibraryItem) => {
+    editLibraryItem(payload).then(data => {
+      setLibrary(
+        library.map(item => {
+          if (item.id === data.id) {
+            return data;
+          }
+          return item;
+        }),
+      );
+    });
+  };
+
   const get = (id: number) => {
     return library.find(item => item.id === id);
   };
@@ -65,5 +80,5 @@ export const useLibrary = () => {
       });
   };
 
-  return { add, get, remove, libraryItems: library, addOwnPlaylist };
+  return { add, get, remove, libraryItems: library, addOwnPlaylist, edit };
 };
