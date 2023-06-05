@@ -43,6 +43,7 @@ const LibraryNavItem = styled(NavLink)`
 
 const AuthSidebarDiv = styled(SidebarDiv)`
   width: 300px;
+  height: 100vh;
   --nav-link-size: 1rem;
 `;
 

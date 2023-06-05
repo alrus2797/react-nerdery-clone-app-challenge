@@ -14,6 +14,8 @@ export const CollectionListContainer = styled.div`
 export const AuthCollectionListContainer = styled(CollectionListContainer)`
   margin-top: 0px;
   color: white;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const CollectionContainer = styled(CollectionListContainer)`
