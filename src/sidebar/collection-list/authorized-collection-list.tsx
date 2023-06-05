@@ -8,6 +8,8 @@ import { LibraryContextMenu } from '../../context-menu';
 import { useRef } from 'react';
 import { useContextMenu } from '../../hooks/useContextMenu';
 import { LibraryItem } from '../../shared/types/library-item';
+import { useModal } from '../../hooks/useModal';
+import { EditLibraryItemModal } from './modals/edit-library-item-modal';
 
 const OnboardingButton = styled(ThemeButton)`
   span {
@@ -24,7 +26,7 @@ const StyledCollectionItem = styled(AuthCollectionItem)``;
 export const AuthCollectionList = () => {
   const { addOwnPlaylist, libraryItems, edit } = useLibrary();
   const contextMenuRef = useRef<HTMLElement>(null);
-  const { addOwnPlaylist, libraryItems } = useLibrary();
+  const { toggle: toggleEditModal, isOpen } = useModal();
 
   const { context, onContextMenu } = useContextMenu<LibraryItem>(true);
 
@@ -39,6 +41,12 @@ export const AuthCollectionList = () => {
         editAction={toggleEditModal}
       />
 
+      <EditLibraryItemModal
+        isOpen={isOpen}
+        toggle={toggleEditModal}
+        item={context.extraData}
+        onSave={edit}
+      />
       <OnboardingButton onClick={() => addOwnPlaylist()}>
         <span>Create Playlist</span>
       </OnboardingButton>
