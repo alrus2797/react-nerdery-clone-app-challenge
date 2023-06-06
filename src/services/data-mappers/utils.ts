@@ -25,10 +25,3 @@ export const sectionsDisplayNames: Record<
   episodes: 'Episodes',
   albums: 'Albums',
 };
-
-export enum SearchResponseType {
-  ARTIST = 'artist',
-  ALBUM = 'album',
-  PLAYLIST = 'playlist',
-  TRACK = 'track',
-}

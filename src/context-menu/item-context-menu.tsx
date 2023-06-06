@@ -1,4 +1,5 @@
 import { useLibrary } from '../hooks/useLibrary';
+import { SpotifyEntityType } from '../shared/types/spotify-entities';
 import { AllSpotifyObjects } from '../shared/types/spotify-objects';
 import { ButtonContainer, StyledMenu } from './styles';
 import { ContextMenuProps } from './types';
@@ -24,7 +25,7 @@ export const ItemContextMenu = ({
     >
       {targetedItem && permitedTypes.includes(targetedItem.type) ? (
         <>
-          {targetedItem.type === 'track' ? (
+          {targetedItem.type === SpotifyEntityType.TRACK ? (
             <>
               <button onClick={() => addToPlaylist(targetedItem, 'favorites')}>
                 Add to liked songs

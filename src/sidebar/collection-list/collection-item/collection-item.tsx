@@ -3,6 +3,7 @@ import { PlaylistIcon } from '../styles';
 import { LibraryItem } from '../../../shared/types/library-item';
 import { ownPlaylistImg } from '../../../assets/images';
 import { getFirstImageOrDefault } from '../../../services/data-mappers/utils';
+import { SpotifyEntityType } from '../../../shared/types/spotify-entities';
 
 const CollectionItemContainer = styled.div`
   display: flex;
@@ -57,7 +58,7 @@ export const AuthCollectionItem = ({
           width="100%"
           height="100%"
           src={
-            entity.type === 'ownPlaylist'
+            entity.type === SpotifyEntityType.OWN_PLAYLIST
               ? ownPlaylistImg
               : getFirstImageOrDefault(entity.images).url
           }
@@ -68,7 +69,8 @@ export const AuthCollectionItem = ({
         <p>{entity.name}</p>
         <span>
           {entity.type}
-          {entity.type === 'ownPlaylist' && entity.items.length > 0
+          {entity.type === SpotifyEntityType.OWN_PLAYLIST &&
+          entity.items.length > 0
             ? ` - ${entity.items.length} items`
             : null}
         </span>
