@@ -1,7 +1,13 @@
-import { AllSpotifyObjects } from './spotify-objects';
+import { AllColectableSpotifyObjects } from './spotify-objects';
+
+export type LibraryItemId = number | string;
 
 export interface LibraryItem {
-  id?: number;
+  id: LibraryItemId;
   userId: number;
-  entity: AllSpotifyObjects;
+  entity: AllColectableSpotifyObjects;
+}
+
+export interface LibraryItemPayload extends Omit<LibraryItem, 'id'> {
+  id?: LibraryItemId;
 }

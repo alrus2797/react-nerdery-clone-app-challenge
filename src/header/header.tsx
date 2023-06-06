@@ -21,17 +21,23 @@ const isInSearchView = (pathname: string) =>
 export const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
   const { auth, isLogged, logout } = useAuth();
 
   return (
     <HeaderWrapper>
       <StyledHeader>
         <Flex direction="row" gap="8px">
-          <HistoryButtonContainer disabled>
+          <HistoryButtonContainer
+            onClick={() => navigate(-1)}
+            disabled={window.history.length === 1}
+          >
             <LeftArrowIcon />
           </HistoryButtonContainer>
-
-          <HistoryButtonContainer>
+          <HistoryButtonContainer
+            onClick={() => navigate(1)}
+            disabled={window.history.length === window.history.state.index + 1}
+          >
             <RightArrowIcon />
           </HistoryButtonContainer>
         </Flex>

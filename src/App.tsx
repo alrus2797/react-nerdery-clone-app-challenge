@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/auth-context';
 import { LoginView, SignupView } from './main-view/auth/';
 import { LibraryProvider } from './context/library-context';
+import { EntityContextMenuProvider } from './context/entity-context-menu';
 
 const MainDiv = styled.div`
   position: relative;
@@ -21,7 +22,9 @@ const MainDiv = styled.div`
 const RootLayout = (
   <MainDiv>
     <LibraryProvider>
-      <DesktopLayout />
+      <EntityContextMenuProvider>
+        <DesktopLayout />
+      </EntityContextMenuProvider>
     </LibraryProvider>
   </MainDiv>
 );

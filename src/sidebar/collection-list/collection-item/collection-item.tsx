@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { PlaylistIcon } from '../styles';
-import { DEFAULT_SONG_URL } from '../../../shared/constants/app';
 import { LibraryItem } from '../../../shared/types/library-item';
+import { ownPlaylistImg } from '../../../assets/images';
+import { getFirstImageOrDefault } from '../../../services/data-mappers/utils';
 
 const CollectionItemContainer = styled.div`
   display: flex;
@@ -39,17 +40,38 @@ const CollectionItemDetails = styled.div`
   }
 `;
 
-export const AuthCollectionItem = ({ entity }: LibraryItem) => {
+interface AuthCollectionItemProps extends LibraryItem {
+  onContextMenu?: (event: React.MouseEvent<Element, MouseEvent>) => void;
+}
+
+export const AuthCollectionItem = ({
+  entity,
+  onContextMenu,
+}: AuthCollectionItemProps) => {
   // console.log(entity);
 
   return (
-    <CollectionItemContainer>
+    <CollectionItemContainer onContextMenu={onContextMenu}>
       <PlaylistIcon size={48} borderRadius={4}>
-        <img width="100%" height="100%" src={DEFAULT_SONG_URL.url} alt="" />
+        <img
+          width="100%"
+          height="100%"
+          src={
+            entity.type === 'ownPlaylist'
+              ? ownPlaylistImg
+              : getFirstImageOrDefault(entity.images).url
+          }
+          alt=""
+        />
       </PlaylistIcon>
       <CollectionItemDetails>
         <p>{entity.name}</p>
-        <span>{entity.type}</span>
+        <span>
+          {entity.type}
+          {entity.type === 'ownPlaylist' && entity.items.length > 0
+            ? ` - ${entity.items.length} items`
+            : null}
+        </span>
       </CollectionItemDetails>
     </CollectionItemContainer>
   );

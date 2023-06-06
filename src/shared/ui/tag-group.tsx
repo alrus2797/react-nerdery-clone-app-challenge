@@ -38,7 +38,7 @@ export const TagGroup = ({
   selected,
 }: TagGroupProps & SimpleComponent) => {
   return (
-    <Flex gap="15px">
+    <Flex gap="15px" margin="8px 0px 16px">
       {items.map(item => (
         <StyledTag
           key={item.value}

@@ -6,6 +6,9 @@ import { Header } from '../header';
 import { SEARCH_ROUTE } from '../shared/constants/router';
 import { SearchResultsView } from './search-categorie-view/search-results-view';
 import { SearchResultsFilter } from './search-categorie-view/search-results-filter';
+import { useEntityContextMenu } from '../hooks/useContextMenu';
+import { useRef } from 'react';
+import { ItemContextMenu } from '../context-menu/item-context-menu';
 
 const MainDiv = styled.div`
   grid-area: main-view;
@@ -18,11 +21,22 @@ const MainDiv = styled.div`
 `;
 
 function MainView() {
+  const { context } = useEntityContextMenu(true);
+
+  const contextMenuRef = useRef<HTMLElement>(null);
+
   return (
     <>
       <Header />
       <MainDiv>
         <div className="header-spacer" />
+        <ItemContextMenu
+          menuRef={contextMenuRef}
+          isToggled={context.isToggled}
+          positionX={context.x}
+          positionY={context.y}
+          targetedItem={context.extraData}
+        />
         <Routes>
           <Route index element={<HomeView />} />
           <Route path={SEARCH_ROUTE} element={<SearchCategorieView />} />

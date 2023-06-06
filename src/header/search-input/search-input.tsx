@@ -33,8 +33,8 @@ const IconSpan = styled.span`
 
 const HANDLER_MS_WAIT = 300;
 
-const handleExtraParam = (extra_param: string | undefined) => {
-  if (extra_param) return `/${extra_param}`;
+const handleExtraParam = (extraParam: string | undefined) => {
+  if (extraParam) return `/${extraParam}`;
   return '';
 };
 
@@ -46,7 +46,7 @@ export function SearchInput() {
   const { pathname } = useLocation();
   const initialMatch = matchPath(`${SEARCH_RESULT_ROUTE}/*`, pathname);
   const [searched, setSearched] = useState(initialMatch?.params.text || '');
-  const extra_param = handleExtraParam(initialMatch?.params['*']);
+  const extraParam = handleExtraParam(initialMatch?.params['*']);
 
   const textHandler = (e: InputChangeEvent) => {
     const text = e.target.value;
@@ -68,11 +68,12 @@ export function SearchInput() {
   useEffect(() => {
     const redirectString = `${SEARCH_ROUTE}/${encodeURIComponent(
       searched,
-    )}${extra_param}`;
+    )}${extraParam}`;
+
     navigate(redirectString, {
       replace: true,
     });
-  }, [searched, navigate, extra_param]);
+  }, [searched, navigate, extraParam]);
 
   return (
     <Flex
