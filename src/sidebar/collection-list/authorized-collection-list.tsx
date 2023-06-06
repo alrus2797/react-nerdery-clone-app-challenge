@@ -47,9 +47,7 @@ export const AuthCollectionList = () => {
         item={context.extraData}
         onSave={edit}
       />
-      <OnboardingButton onClick={() => addOwnPlaylist()}>
-        <span>Create Playlist</span>
-      </OnboardingButton>
+
       <Flex padding="0 8px 8px" width="100%">
         {libraryItems.length === 0 ? (
           <Flex
@@ -63,6 +61,9 @@ export const AuthCollectionList = () => {
             <div>
               <div>Create your first Playlist</div>
               <span>It's easy, we'll help you</span>
+              <OnboardingButton onClick={() => addOwnPlaylist()}>
+                <span>Create Playlist</span>
+              </OnboardingButton>
             </div>
           </Flex>
         ) : (

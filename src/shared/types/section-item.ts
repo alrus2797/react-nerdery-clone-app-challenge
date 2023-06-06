@@ -1,4 +1,5 @@
 import { ImageSource } from './image-data';
+import { AllSpotifyObjects } from './spotify-objects';
 
 export interface SectionItem {
   name: string;
@@ -7,4 +8,5 @@ export interface SectionItem {
   image: ImageSource;
   id: string;
   type?: string;
+  entity?: AllSpotifyObjects;
 }

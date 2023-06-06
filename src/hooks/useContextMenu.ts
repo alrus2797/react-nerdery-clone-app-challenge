@@ -1,6 +1,15 @@
-import { useEffect, useState, MouseEvent } from 'react';
+import {
+  useEffect,
+  useState,
+  MouseEvent,
+  useContext,
+  Dispatch,
+  SetStateAction,
+} from 'react';
+import { EntityMenuContext } from '../context/entity-context-menu';
+import { AllSpotifyObjects } from '../shared/types/spotify-objects';
 
-interface ContextState<T> {
+export interface ContextState<T> {
   isToggled: boolean;
   x: number;
   y: number;
@@ -13,8 +22,19 @@ const defaultContextState = {
   y: 0,
 };
 
-export const useContextMenu = <T>(persistExtraData = false) => {
-  const [context, setContext] = useState<ContextState<T>>(defaultContextState);
+export const useContextMenu = <T>(
+  persistExtraData = false,
+  customState?: {
+    context: ContextState<T>;
+    setContext: Dispatch<SetStateAction<ContextState<T>>>;
+  },
+) => {
+  let state = useState<ContextState<T>>(defaultContextState);
+
+  if (customState) {
+    state = [customState.context, customState.setContext];
+  }
+  const [context, setContext] = state;
 
   const resetContextMenu = () => {
     if (persistExtraData === true) {
@@ -51,4 +71,22 @@ export const useContextMenu = <T>(persistExtraData = false) => {
   });
 
   return { context, setContext, resetContextMenu, toggle, onContextMenu };
+};
+
+export const useEntityContextMenu = (persistExtraData = false) => {
+  const entityMenuContext = useContext(EntityMenuContext);
+  if (!entityMenuContext) {
+    throw new Error(
+      'useEntityContextMenu must be used within a EntityMenuContextProvider',
+    );
+  }
+  const [contextState, setContextState] = entityMenuContext;
+  const useContextMenuHook = useContextMenu(persistExtraData, {
+    context: contextState as ContextState<AllSpotifyObjects>,
+    setContext: setContextState as Dispatch<
+      SetStateAction<ContextState<AllSpotifyObjects>>
+    >,
+  });
+
+  return useContextMenuHook;
 };

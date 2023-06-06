@@ -32,6 +32,7 @@ export const searchMapper = (searchSections: SpotifyApi.SearchResponse) => {
               description: `${generateAlbumDescription(item)}`,
               id,
               type,
+              entity: item,
             };
           case SearchResponseType.PLAYLIST:
             return {
@@ -40,6 +41,7 @@ export const searchMapper = (searchSections: SpotifyApi.SearchResponse) => {
               description: `${item.owner.display_name}`,
               id,
               type,
+              entity: item,
             };
           case SearchResponseType.TRACK:
             return {
@@ -48,6 +50,7 @@ export const searchMapper = (searchSections: SpotifyApi.SearchResponse) => {
               name: item.name,
               id,
               type,
+              entity: item,
             };
           default:
             return {

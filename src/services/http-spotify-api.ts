@@ -2,7 +2,11 @@ import { Section } from '../shared/types/section';
 import axios from 'axios';
 import { searchMapper } from './data-mappers/search-mapper';
 import { categoriesMapper } from './data-mappers/categories-mapper';
-import { LibraryItem, LibraryItemPayload } from '../shared/types/library-item';
+import {
+  LibraryItem,
+  LibraryItemId,
+  LibraryItemPayload,
+} from '../shared/types/library-item';
 import { LoginInputs } from '../shared/types/auth-inputs';
 import { UserWithToken } from '../shared/types/user';
 import { SignupInputs } from '../shared/types/signup-inputs';
@@ -62,9 +66,20 @@ export async function editLibraryItem(libraryItem: LibraryItem) {
   return data;
 }
 
-export async function removeFromLibrary(libraryItemId: number) {
+export async function removeFromLibrary(libraryItemId: LibraryItemId) {
   const { data } = await axios.delete<LibraryItem>(
     `${API_BASE_URL}/library-items/${libraryItemId}`,
+  );
+  return data;
+}
+
+export async function addTrackToPlaylist(
+  track: SpotifyApi.TrackObjectSimplified,
+  playlistId: LibraryItemId,
+) {
+  const { data } = await axios.post<LibraryItem>(
+    `${API_BASE_URL}/add-to-playlist/${playlistId}`,
+    track,
   );
   return data;
 }

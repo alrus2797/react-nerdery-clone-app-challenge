@@ -21,7 +21,6 @@ export const SearchResultsView = () => {
   }, [reSync, text]);
   return (
     <Flex direction="column" margin="20px">
-      <div>Searched Text: {text}</div>
       <TagGroup
         items={getTagsSearchFilters}
         action={item => navigate(item)}

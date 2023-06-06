@@ -22,6 +22,11 @@ export const StyledMenu = styled.menu<{
   overflow-y: auto;
   padding: 4px;
 
+  span {
+    padding: 8px 8px;
+    font-size: 0.815rem;
+    font-weight: 600;
+  }
   button {
     width: 100%;
     background-color: transparent;
@@ -52,5 +57,16 @@ export const StyledMenu = styled.menu<{
     opacity: 1;
     display: flex;
     flex-direction: column;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden scroll;
+  button {
+    padding: 24px 16px;
   }
 `;

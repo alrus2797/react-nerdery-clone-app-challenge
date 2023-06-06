@@ -66,7 +66,12 @@ export const AuthCollectionItem = ({
       </PlaylistIcon>
       <CollectionItemDetails>
         <p>{entity.name}</p>
-        <span>{entity.type}</span>
+        <span>
+          {entity.type}
+          {entity.type === 'ownPlaylist' && entity.items.length > 0
+            ? ` - ${entity.items.length} items`
+            : null}
+        </span>
       </CollectionItemDetails>
     </CollectionItemContainer>
   );

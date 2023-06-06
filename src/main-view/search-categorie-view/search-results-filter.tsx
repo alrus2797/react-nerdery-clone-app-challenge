@@ -39,8 +39,6 @@ export const SearchResultsFilter = () => {
         action={item => navigate(`${SEARCH_ROUTE}/${text}/${item}`)}
         selected={filter ?? ''}
       />
-      <div>Searched Text: {text}</div>
-      <div>Filter: {filter}</div>
       {pending ? (
         <div>Loading...</div>
       ) : (

@@ -1,11 +1,12 @@
 import { useLibrary } from '../hooks/useLibrary';
-import { LibraryItem } from '../shared/types/library-item';
+import { LibraryItem, LibraryItemId } from '../shared/types/library-item';
+import { SpotifyEntityType } from '../shared/types/spotify-entities';
 import { StyledMenu } from './styles';
 import { ContextMenuProps } from './types';
 
 interface LibraryContextMenuProps
   extends Omit<ContextMenuProps<LibraryItem>, 'buttons'> {
-  editAction: (id: number) => void;
+  editAction: (id: LibraryItemId) => void;
 }
 
 export const LibraryContextMenu = ({
@@ -17,6 +18,7 @@ export const LibraryContextMenu = ({
   editAction,
 }: LibraryContextMenuProps) => {
   const { addOwnPlaylist, remove } = useLibrary();
+
   return (
     <StyledMenu
       left={positionX}
@@ -26,9 +28,11 @@ export const LibraryContextMenu = ({
       className={isToggled ? 'active' : ''}
     >
       <button onClick={addOwnPlaylist}> Create new Playlist </button>
-      {targetedItem && targetedItem.entity.type === 'ownPlaylist' ? (
+      {targetedItem ? (
         <>
-          <button onClick={() => editAction(targetedItem.id)}> Edit </button>
+          {targetedItem.entity.type === SpotifyEntityType.OWN_PLAYLIST ? (
+            <button onClick={() => editAction(targetedItem.id)}> Edit </button>
+          ) : null}
           <button onClick={() => remove(targetedItem.id)}> Remove </button>
         </>
       ) : null}
