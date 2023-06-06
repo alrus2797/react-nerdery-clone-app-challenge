@@ -14,6 +14,9 @@ export const CollectionListContainer = styled.div`
 export const AuthCollectionListContainer = styled(CollectionListContainer)`
   margin-top: 0px;
   color: white;
+  height: 97%;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const CollectionContainer = styled(CollectionListContainer)`
@@ -46,10 +49,6 @@ export const CollectionItem = styled.div`
     word-break: break-all;
     font-weight: 700;
   }
-`;
-
-export const AuthCollectionItem = styled(CollectionItem)`
-  opacity: 1;
 `;
 
 export const PlaylistIcon = styled.div<{

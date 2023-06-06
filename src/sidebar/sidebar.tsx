@@ -3,9 +3,11 @@ import { getNavLinks } from '../services/static-data';
 import { UnauthCollectionList, AuthCollectionList } from './collection-list';
 import { LegalLinks } from './legal-links';
 import { LogoDiv, SidebarDiv, SidebarNav } from './styles';
-import { SpotifyLogo } from '../assets/icons';
+import { PlusIcon, SpotifyLogo } from '../assets/icons';
 import { useAuth } from '../hooks/useAuth';
 import styled from 'styled-components';
+import { Flex } from '../shared/ui/flex';
+import { useLibrary } from '../hooks/useLibrary';
 
 const UnauthenticatedSidebar = ({ navLinks }: NavLinks) => (
   <SidebarDiv>
@@ -33,6 +35,7 @@ const NavlinkBox = styled.div`
 `;
 
 const CollectionBox = styled(NavlinkBox)`
+  overflow: hidden;
   padding: 10px 0px;
   flex: 1;
 `;
@@ -43,11 +46,33 @@ const LibraryNavItem = styled(NavLink)`
 
 const AuthSidebarDiv = styled(SidebarDiv)`
   width: 300px;
+  height: 100vh;
   --nav-link-size: 1rem;
+`;
+
+const IconButtonContainer = styled.button`
+  border: none;
+  background: none;
+  cursor: pointer;
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--main-text-color);
+    transition: fill 0.2s ease-in-out;
+  }
+
+  &:hover {
+    svg {
+      fill: var(--base);
+    }
+  }
 `;
 
 const AuthenticatedSidebar = ({ navLinks }: NavLinks) => {
   const libraryNav = getNavLinks([2])[0];
+
+  const { addOwnPlaylist } = useLibrary();
+
   return (
     <AuthSidebarDiv>
       <SidebarNav>
@@ -55,7 +80,16 @@ const AuthenticatedSidebar = ({ navLinks }: NavLinks) => {
           <NavLinkList navLinks={navLinks} />
         </NavlinkBox>
         <CollectionBox>
-          <LibraryNavItem {...libraryNav} icon={libraryNav.activeIcon} />
+          <Flex
+            justifyContent="space-between"
+            align="center"
+            margin="0 16px 0 0"
+          >
+            <LibraryNavItem {...libraryNav} icon={libraryNav.activeIcon} />
+            <IconButtonContainer onClick={addOwnPlaylist}>
+              <PlusIcon />
+            </IconButtonContainer>
+          </Flex>
           <AuthCollectionList />
         </CollectionBox>
       </SidebarNav>

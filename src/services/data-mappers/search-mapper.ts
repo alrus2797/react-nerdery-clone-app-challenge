@@ -1,7 +1,7 @@
 import { Section } from '../../shared/types/section';
 import { SectionItem } from '../../shared/types/section-item';
+import { SpotifyEntityType } from '../../shared/types/spotify-entities';
 import {
-  SearchResponseType,
   generateAlbumDescription,
   getFirstImageOrDefault,
   joinArtists,
@@ -17,37 +17,40 @@ export const searchMapper = (searchSections: SpotifyApi.SearchResponse) => {
       .map<SectionItem>(item => {
         const { type, name, id } = item;
         switch (type) {
-          case SearchResponseType.ARTIST:
+          case SpotifyEntityType.ARTIST:
             return {
               name,
               image: getFirstImageOrDefault(item.images),
-              description: 'Artista',
+              description: 'Artist',
               id,
               type,
             };
-          case SearchResponseType.ALBUM:
+          case SpotifyEntityType.ALBUM:
             return {
               name: item.name,
               image: getFirstImageOrDefault(item.images),
               description: `${generateAlbumDescription(item)}`,
               id,
               type,
+              entity: item,
             };
-          case SearchResponseType.PLAYLIST:
+          case SpotifyEntityType.PLAYLIST:
             return {
               name: item.name,
               image: getFirstImageOrDefault(item.images),
               description: `${item.owner.display_name}`,
               id,
               type,
+              entity: item,
             };
-          case SearchResponseType.TRACK:
+          case SpotifyEntityType.TRACK:
             return {
               description: `${joinArtists(item.artists)}`,
               image: getFirstImageOrDefault(item.album.images),
               name: item.name,
               id,
               type,
+              entity: item,
             };
           default:
             return {

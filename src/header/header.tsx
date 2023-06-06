@@ -21,17 +21,23 @@ const isInSearchView = (pathname: string) =>
 export const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
   const { auth, isLogged, logout } = useAuth();
 
   return (
     <HeaderWrapper>
       <StyledHeader>
         <Flex direction="row" gap="8px">
-          <HistoryButtonContainer disabled>
+          <HistoryButtonContainer
+            onClick={() => navigate(-1)}
+            disabled={window.history.length === 1}
+          >
             <LeftArrowIcon />
           </HistoryButtonContainer>
-
-          <HistoryButtonContainer>
+          <HistoryButtonContainer
+            onClick={() => navigate(1)}
+            disabled={window.history.length === window.history.state.index + 1}
+          >
             <RightArrowIcon />
           </HistoryButtonContainer>
         </Flex>
@@ -47,8 +53,8 @@ export const Header = () => {
             </LoginButton>
           </div>
         ) : (
-          <Flex align="center">
-            <h4>Name: {auth?.user.username}</h4>
+          <Flex align="center" gap="30px">
+            <h4>{auth?.user.username}</h4>
             <Box margin="0px 0px 0px 10px">
               <ThemeButton onClick={logout}>Logout</ThemeButton>
             </Box>

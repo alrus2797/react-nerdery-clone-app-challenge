@@ -3,9 +3,10 @@ import { DesktopLayout } from './desktop-layout';
 import GlobalStyle from './globalStyles';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { AuthProvider } from './providers/auth-provider';
+import { AuthProvider } from './context/auth-context';
 import { LoginView, SignupView } from './main-view/auth/';
-import { setupInterceptors } from './interceptors';
+import { LibraryProvider } from './context/library-context';
+import { EntityContextMenuProvider } from './context/entity-context-menu';
 
 const MainDiv = styled.div`
   position: relative;
@@ -20,11 +21,13 @@ const MainDiv = styled.div`
 
 const RootLayout = (
   <MainDiv>
-    <DesktopLayout />
+    <LibraryProvider>
+      <EntityContextMenuProvider>
+        <DesktopLayout />
+      </EntityContextMenuProvider>
+    </LibraryProvider>
   </MainDiv>
 );
-
-setupInterceptors();
 
 function App() {
   return (
