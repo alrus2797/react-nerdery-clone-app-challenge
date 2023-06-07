@@ -1,4 +1,4 @@
-import { Route, Routes, useActionData } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeView } from './home-view';
 import { SearchCategorieView } from './search-categorie-view/search-view';
