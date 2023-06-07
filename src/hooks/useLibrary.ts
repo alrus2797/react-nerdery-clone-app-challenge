@@ -18,7 +18,8 @@ import { SpotifyEntityType } from '../shared/types/spotify-entities';
 export const useLibrary = () => {
   const [library, setLibrary] = useContext(LibraryContext);
   const { auth } = useAuth();
-  if (!auth) throw Error('Must be inside an AuthProvider');
+
+  if (!auth) throw Error('useLibrary hook must be inside an AuthProvider');
 
   const ownPlaylists = library.filter(
     item => item.entity.type === SpotifyEntityType.OWN_PLAYLIST,
