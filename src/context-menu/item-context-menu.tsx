@@ -13,7 +13,7 @@ export const ItemContextMenu = ({
   menuRef,
   targetedItem,
 }: Omit<ContextMenuProps<AllSpotifyObjects>, 'buttons'>) => {
-  const { add, ownPlaylists, addToPlaylist } = useLibrary();
+  const { add, ownPlaylists, addToPlaylist, addToFavorites } = useLibrary();
 
   return (
     <StyledMenu
@@ -27,20 +27,26 @@ export const ItemContextMenu = ({
         <>
           {targetedItem.type === SpotifyEntityType.TRACK ? (
             <>
-              <button onClick={() => addToPlaylist(targetedItem, 'favorites')}>
+              <button onClick={() => addToFavorites(targetedItem)}>
                 Add to liked songs
               </button>
-              <span> Add to playlist:</span>
-              <ButtonContainer>
-                {ownPlaylists.map((item, idx) => (
-                  <button
-                    onClick={() => addToPlaylist(targetedItem, item.id)}
-                    key={idx}
-                  >
-                    Add to {item.entity.name}
-                  </button>
-                ))}
-              </ButtonContainer>
+              {ownPlaylists.length > 0 ? (
+                <>
+                  <span> Add to playlist:</span>
+                  <ButtonContainer>
+                    {ownPlaylists.map((item, idx) => (
+                      <button
+                        onClick={() => addToPlaylist(targetedItem, item.id)}
+                        key={idx}
+                      >
+                        Add to {item.entity.name}
+                      </button>
+                    ))}
+                  </ButtonContainer>
+                </>
+              ) : (
+                <p>Create a new playlist to add a song there </p>
+              )}
             </>
           ) : (
             <button onClick={() => add(targetedItem)}> Add to library</button>

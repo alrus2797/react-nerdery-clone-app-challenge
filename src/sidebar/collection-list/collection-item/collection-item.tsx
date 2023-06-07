@@ -49,21 +49,15 @@ export const AuthCollectionItem = ({
   entity,
   onContextMenu,
 }: AuthCollectionItemProps) => {
-  // console.log(entity);
+  const imageURL =
+    entity.type === SpotifyEntityType.OWN_PLAYLIST
+      ? entity.image ?? ownPlaylistImg
+      : getFirstImageOrDefault(entity.images).url;
 
   return (
     <CollectionItemContainer onContextMenu={onContextMenu}>
       <PlaylistIcon size={48} borderRadius={4}>
-        <img
-          width="100%"
-          height="100%"
-          src={
-            entity.type === SpotifyEntityType.OWN_PLAYLIST
-              ? ownPlaylistImg
-              : getFirstImageOrDefault(entity.images).url
-          }
-          alt=""
-        />
+        <img width="100%" height="100%" src={imageURL} alt="" />
       </PlaylistIcon>
       <CollectionItemDetails>
         <p>{entity.name}</p>

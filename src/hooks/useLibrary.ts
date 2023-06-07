@@ -22,8 +22,13 @@ export const useLibrary = () => {
   if (!auth) throw Error('useLibrary hook must be inside an AuthProvider');
 
   const ownPlaylists = library.filter(
-    item => item.entity.type === SpotifyEntityType.OWN_PLAYLIST,
+    item =>
+      item.entity.type === SpotifyEntityType.OWN_PLAYLIST &&
+      item.entity.id !== 'favorites',
   );
+
+  const libraryItems = library.filter(item => item.entity.id !== 'favorites');
+  const favorite = library.find(item => item.entity.id === 'favorites');
 
   useEffect(() => {
     getLibraryItems(auth.user.id)
@@ -32,7 +37,6 @@ export const useLibrary = () => {
       })
       .catch(error => {
         console.log(error);
-
         alert('There was an error while fetching the items into library');
       });
   }, [auth.user.id, setLibrary]);
@@ -52,25 +56,36 @@ export const useLibrary = () => {
       });
   };
 
+  const addToPlaylistPromise = (
+    track: SpotifyApi.TrackObjectSimplified,
+    libraryItemId: LibraryItemId,
+  ) =>
+    addTrackToPlaylist(track, libraryItemId).then(data =>
+      setLibrary(
+        library.map(item => {
+          if (item.id === data.id) {
+            return data;
+          }
+          return item;
+        }),
+      ),
+    );
+
   const addToPlaylist = (
     track: SpotifyApi.TrackObjectSimplified,
     libraryItemId: LibraryItemId,
   ) => {
-    addTrackToPlaylist(track, libraryItemId)
-      .then(data =>
-        setLibrary(
-          library.map(item => {
-            if (item.id === data.id) {
-              return data;
-            }
-            return item;
-          }),
-        ),
-      )
-      .catch(error => {
-        console.log(error);
-        alert('There was an error while adding the item into library');
-      });
+    addToPlaylistPromise(track, libraryItemId).catch(error => {
+      console.log(error);
+      alert('There was an error while adding the item into library');
+    });
+  };
+
+  const addToFavorites = (track: SpotifyApi.TrackObjectSimplified) => {
+    addToPlaylistPromise(track, `favorites-${auth.user.id}`).catch(error => {
+      console.log(error);
+      alert('There was an error while adding the item into your favorites');
+    });
   };
 
   const addOwnPlaylist = () => {
@@ -116,10 +131,12 @@ export const useLibrary = () => {
     add,
     get,
     remove,
-    libraryItems: library,
+    favorite,
+    libraryItems,
     ownPlaylists,
+    addToPlaylist,
+    addToFavorites,
     addOwnPlaylist,
     edit,
-    addToPlaylist,
   };
 };
