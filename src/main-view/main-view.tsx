@@ -1,11 +1,7 @@
-import { Route, Routes } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
-import { HomeView } from './home-view';
-import { SearchCategorieView } from './search-categorie-view/search-view';
 import { Header } from '../header';
-import { SEARCH_ROUTE } from '../shared/constants/router';
-import { SearchResultsView } from './search-categorie-view/search-results-view';
-import { SearchResultsFilter } from './search-categorie-view/search-results-filter';
+
 import { useEntityContextMenu } from '../hooks/useContextMenu';
 import { useRef } from 'react';
 import { ItemContextMenu } from '../context-menu/item-context-menu';
@@ -42,26 +38,7 @@ function MainView() {
             targetedItem={context.extraData}
           />
         ) : null}
-        <Routes>
-          <Route index element={<HomeView />} />
-          <Route path={SEARCH_ROUTE} element={<SearchCategorieView />} />
-          <Route
-            path={`${SEARCH_ROUTE}/:text`}
-            element={<SearchResultsView />}
-          />
-          <Route
-            path={`${SEARCH_ROUTE}/:text/:filter`}
-            element={<SearchResultsFilter />}
-          />
-          <Route
-            path="*"
-            element={
-              <div>
-                <h1>Route Not Found</h1>
-              </div>
-            }
-          />
-        </Routes>
+        <Outlet />
       </MainDiv>
     </>
   );
