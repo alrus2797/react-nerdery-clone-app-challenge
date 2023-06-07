@@ -9,6 +9,7 @@ import {
   getLibraryItems,
   removeFromLibrary,
   addTrackToPlaylist,
+  removeTrackFromPlaylist,
 } from '../services/http-spotify-api';
 import { useAuth } from './useAuth';
 import { AllColectableSpotifyObjects } from '../shared/types/spotify-objects';
@@ -88,6 +89,21 @@ export const useLibrary = () => {
     });
   };
 
+  const removeFromFavorites = (track: SpotifyApi.TrackObjectSimplified) => {
+    removeTrackFromPlaylist(`favorites-${auth.user.id}`, track.id).then(
+      data => {
+        setLibrary(
+          library.map(item => {
+            if (item.id === data.id) {
+              return data;
+            }
+            return item;
+          }),
+        );
+      },
+    );
+  };
+
   const addOwnPlaylist = () => {
     createPlaylist(auth.user.id)
       .then(data => setLibrary([data, ...library]))
@@ -135,8 +151,9 @@ export const useLibrary = () => {
     libraryItems,
     ownPlaylists,
     addToPlaylist,
-    addToFavorites,
     addOwnPlaylist,
+    addToFavorites,
+    removeFromFavorites,
     edit,
   };
 };

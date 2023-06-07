@@ -84,6 +84,16 @@ export async function addTrackToPlaylist(
   return data;
 }
 
+export async function removeTrackFromPlaylist(
+  playlistId: LibraryItemId,
+  trackId: string,
+) {
+  const { data } = await axios.delete<LibraryItem>(
+    `${API_BASE_URL}/remove-from-playlist/${playlistId}/${trackId}`,
+  );
+  return data;
+}
+
 export async function login(payload: LoginInputs) {
   const { data } = await axios.post<UserWithToken>(`${API_LOGIN_URL}`, payload);
   return data;
