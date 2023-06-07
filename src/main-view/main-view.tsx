@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useActionData } from 'react-router-dom';
 import styled from 'styled-components';
 import { HomeView } from './home-view';
 import { SearchCategorieView } from './search-categorie-view/search-view';
@@ -9,6 +9,7 @@ import { SearchResultsFilter } from './search-categorie-view/search-results-filt
 import { useEntityContextMenu } from '../hooks/useContextMenu';
 import { useRef } from 'react';
 import { ItemContextMenu } from '../context-menu/item-context-menu';
+import { useAuth } from '../hooks/useAuth';
 
 const MainDiv = styled.div`
   grid-area: main-view;
@@ -25,18 +26,22 @@ function MainView() {
 
   const contextMenuRef = useRef<HTMLElement>(null);
 
+  const { isLogged } = useAuth();
+
   return (
     <>
       <Header />
       <MainDiv>
         <div className="header-spacer" />
-        <ItemContextMenu
-          menuRef={contextMenuRef}
-          isToggled={context.isToggled}
-          positionX={context.x}
-          positionY={context.y}
-          targetedItem={context.extraData}
-        />
+        {isLogged ? (
+          <ItemContextMenu
+            menuRef={contextMenuRef}
+            isToggled={context.isToggled}
+            positionX={context.x}
+            positionY={context.y}
+            targetedItem={context.extraData}
+          />
+        ) : null}
         <Routes>
           <Route index element={<HomeView />} />
           <Route path={SEARCH_ROUTE} element={<SearchCategorieView />} />
