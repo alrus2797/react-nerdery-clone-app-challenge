@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - staging
+      
 env:
   VITE_APIBASE_URL: ${{vars.VITE_APIBASE_URL}}
   
