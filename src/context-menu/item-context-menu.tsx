@@ -13,8 +13,21 @@ export const ItemContextMenu = ({
   menuRef,
   targetedItem,
 }: Omit<ContextMenuProps<AllSpotifyObjects>, 'buttons'>) => {
-  const { add, ownPlaylists, addToPlaylist, addToFavorites } = useLibrary();
+  const {
+    add,
+    favorite,
+    ownPlaylists,
+    addToPlaylist,
+    addToFavorites,
+    removeFromFavorites,
+  } = useLibrary();
 
+  let itemInFavorites = false;
+  if (favorite?.entity.type === SpotifyEntityType.OWN_PLAYLIST) {
+    itemInFavorites = !!favorite?.entity.items.find(
+      item => item.id === targetedItem?.id,
+    );
+  }
   return (
     <StyledMenu
       left={positionX}
@@ -27,9 +40,16 @@ export const ItemContextMenu = ({
         <>
           {targetedItem.type === SpotifyEntityType.TRACK ? (
             <>
-              <button onClick={() => addToFavorites(targetedItem)}>
-                Add to liked songs
-              </button>
+              {itemInFavorites ? (
+                <button onClick={() => removeFromFavorites(targetedItem)}>
+                  {' '}
+                  Remove from liked songs{' '}
+                </button>
+              ) : (
+                <button onClick={() => addToFavorites(targetedItem)}>
+                  Add to liked songs
+                </button>
+              )}
               {ownPlaylists.length > 0 ? (
                 <>
                   <span> Add to playlist:</span>
