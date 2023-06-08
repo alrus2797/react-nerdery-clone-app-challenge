@@ -27,7 +27,7 @@ function MainView() {
   return (
     <>
       <Header />
-      <MainDiv>
+      <MainDiv data-testid="mainview-element">
         <div className="header-spacer" />
         {isLogged ? (
           <ItemContextMenu

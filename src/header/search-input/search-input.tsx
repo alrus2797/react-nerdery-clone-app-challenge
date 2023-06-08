@@ -5,9 +5,12 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { SEARCH_ROUTE } from '../../shared/constants/router';
-import { debounce } from 'lodash';
 import { InputChangeEvent } from '../../shared/types/input-change-event';
 import { useParams } from 'react-router-dom';
+
+// For vitest to work, we need to import lodash like this:
+import lodash from 'lodash';
+const { debounce } = lodash;
 
 const SearchContainer = styled.div`
   flex: 0 1 364px;
@@ -41,9 +44,9 @@ export function SearchInput() {
 
   const inputRef = useRef() as RefObject<HTMLInputElement>;
 
-  const { text: textParams, filter } = useParams();
+  const { text: textParam, filter } = useParams();
 
-  const [searched, setSearched] = useState(textParams || '');
+  const [searched, setSearched] = useState(textParam || '');
   const extraParam = handleExtraParam(filter);
 
   const textHandler = (e: InputChangeEvent) => {
@@ -54,13 +57,13 @@ export function SearchInput() {
   const debouncedHandler = debounce(textHandler, HANDLER_MS_WAIT);
 
   useEffect(() => {
-    if (textParams) {
+    if (textParam) {
       if (inputRef && inputRef.current) {
-        inputRef.current.value = decodeURIComponent(textParams);
+        inputRef.current.value = decodeURIComponent(textParam);
       }
-      setSearched(textParams);
+      setSearched(textParam);
     }
-  }, [textParams]);
+  }, [textParam]);
 
   useEffect(() => {
     const redirectString = `${SEARCH_ROUTE}/${encodeURIComponent(
@@ -79,9 +82,10 @@ export function SearchInput() {
       }}
       align="center"
     >
-      <SearchContainer>
+      <SearchContainer data-testid="text-input-container">
         <form role="search">
           <TextField
+            data-testid="text-input"
             ref={inputRef}
             maxLength={800}
             autoCorrect="off"
