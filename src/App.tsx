@@ -8,10 +8,10 @@ import { LoginView, SignupView } from './main-view/auth/';
 import { LibraryProvider } from './context/library-context';
 import { EntityContextMenuProvider } from './context/entity-context-menu';
 import { HomeView } from './main-view/home-view';
-import { SearchCategorieView } from './main-view/search-categorie-view/search-view';
-import { SEARCH_ROUTE } from './shared/constants/router';
 import { SearchResultsView } from './main-view/search-categorie-view/search-results-view';
 import { SearchResultsFilter } from './main-view/search-categorie-view/search-results-filter';
+import { SingleItemView } from './main-view';
+import { SearchCategorieView } from './main-view/search-categorie-view/search-view';
 
 const MainDiv = styled.div`
   position: relative;
@@ -44,15 +44,13 @@ function App() {
           <Route path="signup" element={<SignupView />} />
           <Route path="/" element={RootLayout}>
             <Route index element={<HomeView />} />
-            <Route path={SEARCH_ROUTE} element={<SearchCategorieView />} />
-            <Route
-              path={`${SEARCH_ROUTE}/:text`}
-              element={<SearchResultsView />}
-            />
-            <Route
-              path={`${SEARCH_ROUTE}/:text/:filter`}
-              element={<SearchResultsFilter />}
-            />
+            <Route path="/search">
+              <Route index element={<SearchCategorieView />} />
+              <Route path=":text" element={<SearchResultsView />} />
+              <Route path=":text/:filter" element={<SearchResultsFilter />} />
+            </Route>
+            <Route path="/entity/:type/:id" element={<SingleItemView />} />
+
             <Route
               path="*"
               element={
