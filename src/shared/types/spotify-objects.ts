@@ -17,3 +17,11 @@ export type SearchSpotifyObjects =
   | SpotifyApi.PlaylistObjectSimplified
   | SpotifyApi.ShowObjectSimplified
   | SpotifyApi.EpisodeObjectSimplified;
+
+export type AllSpotifyObjectsFull =
+  | SpotifyApi.ArtistObjectFull
+  | SpotifyApi.AlbumObjectFull
+  | SpotifyApi.PlaylistObjectFull
+  | SpotifyApi.ShowObjectFull
+  | SpotifyApi.TrackObjectFull
+  | Playlist;

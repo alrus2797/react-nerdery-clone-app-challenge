@@ -32,7 +32,7 @@ export const AuthCollectionList = () => {
   const { context, onContextMenu } = useContextMenu<LibraryItem>(true);
 
   return (
-    <AuthCollectionListContainer>
+    <AuthCollectionListContainer data-testid="auth-collection-list">
       <LibraryContextMenu
         menuRef={contextMenuRef}
         isToggled={context.isToggled}
@@ -73,7 +73,9 @@ export const AuthCollectionList = () => {
           </Flex>
         ) : (
           <Flex direction="column" width="100%" gap="5px">
-            {favorite ? (
+            {favorite &&
+            favorite?.entity.type === SpotifyEntityType.OWN_PLAYLIST &&
+            favorite?.entity.items.length > 0 ? (
               <>
                 <StyledCollectionItem key={favorite.id} {...favorite} />
               </>
