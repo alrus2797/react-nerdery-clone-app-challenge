@@ -1,3 +1,4 @@
+import { DEFAULT_SONG_URL } from '../../shared/constants/app';
 import { Playlist } from '../../shared/types/playlist';
 import { SectionItem } from '../../shared/types/section-item';
 import { SpotifyEntityType } from '../../shared/types/spotify-entities';
@@ -48,6 +49,15 @@ export const normalizeEntity = (
         image: getFirstImageOrDefault(entity.album.images),
         name: entity.name,
         id,
+        type,
+        entity: entity,
+      };
+    case SpotifyEntityType.OWN_PLAYLIST:
+      return {
+        description: 'Favorites playlist',
+        image: { url: entity.image ?? DEFAULT_SONG_URL.url },
+        name: entity.name,
+        id: id ?? '',
         type,
         entity: entity,
       };
